@@ -12,6 +12,7 @@
     "@neondatabase/serverless": "^1.0.2",
     "@orpc/client": "^1.10.3",
     "@orpc/server": "^1.10.3",
+    "@orpc/tanstack-query": "^1.10.4",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "next": "15.3.3",

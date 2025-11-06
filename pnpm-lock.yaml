@@ -17,6 +17,9 @@ importers:
       '@orpc/server':
         specifier: ^1.10.3
         version: 1.10.3
+      '@orpc/tanstack-query':
+        specifier: ^1.10.4
+        version: 1.10.4(@orpc/client@1.10.3)(@tanstack/query-core@5.90.7)
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
@@ -591,6 +594,14 @@ packages:
       '@opentelemetry/api':
         optional: true
 
+  '@orpc/shared@1.10.4':
+    resolution: {integrity: sha512-NNQFfVVI2GFpJsaHdT6Zs/89NGod15DhGPSPFmtk9lNdQ4QzuqjAvTvEdNyeDEmcnUdNEJqhk5S2bpK1QTjWvQ==}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.9.0'
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+
   '@orpc/standard-server-aws-lambda@1.10.3':
     resolution: {integrity: sha512-GPaOWjoZqyr+qAu6jYsL34M8IpzCfPlSOIH6UzWHi5+xhLnM4pnmNjx0qJrIUuv6ExoaTo/yitzojBqlhT7edg==}
 
@@ -613,6 +624,12 @@ packages:
 
   '@orpc/standard-server@1.10.3':
     resolution: {integrity: sha512-4ke7cyTkIntFf9PL+Snyo/ZhFn2mUbhmw7xTCQtF1I3yP7SZr21ZGfa6UpJcKMR+le5cVRCV/pjTjeXsDm1glg==}
+
+  '@orpc/tanstack-query@1.10.4':
+    resolution: {integrity: sha512-wVPD0eXubufUSE5GxcUZ8DkoWZafNQt3VxVLzerQzZgMRSbu9+4HMCCHMfOdofYITE7AfA3Tlz/328kzGVZiDA==}
+    peerDependencies:
+      '@orpc/client': 1.10.4
+      '@tanstack/query-core': '>=5.80.2'
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
@@ -710,6 +727,9 @@ packages:
 
   '@tailwindcss/postcss@4.1.16':
     resolution: {integrity: sha512-Qn3SFGPXYQMKR/UtqS+dqvPrzEeBZHrFA92maT4zijCVggdsXnDBMsPFJo1eArX3J+O+Gi+8pV4PkqjLCNBk3A==}
+
+  '@tanstack/query-core@5.90.7':
+    resolution: {integrity: sha512-6PN65csiuTNfBMXqQUxQhCNdtm1rV+9kC9YwWAIKcaxAauq3Wu7p18j3gQY3YIBJU70jT/wzCCZ2uqto/vQgiQ==}
 
   '@types/node@20.19.24':
     resolution: {integrity: sha512-FE5u0ezmi6y9OZEzlJfg37mqqf6ZDSF2V/NLjUyGrR9uTZ7Sb9F7bLNZ03S4XVUNRWGA7Ck4c1kK+YnuWjl+DA==}
@@ -1468,6 +1488,11 @@ snapshots:
       radash: 12.1.1
       type-fest: 5.2.0
 
+  '@orpc/shared@1.10.4':
+    dependencies:
+      radash: 12.1.1
+      type-fest: 5.2.0
+
   '@orpc/standard-server-aws-lambda@1.10.3':
     dependencies:
       '@orpc/shared': 1.10.3
@@ -1510,6 +1535,14 @@ snapshots:
   '@orpc/standard-server@1.10.3':
     dependencies:
       '@orpc/shared': 1.10.3
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/tanstack-query@1.10.4(@orpc/client@1.10.3)(@tanstack/query-core@5.90.7)':
+    dependencies:
+      '@orpc/client': 1.10.3
+      '@orpc/shared': 1.10.4
+      '@tanstack/query-core': 5.90.7
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
@@ -1589,6 +1622,8 @@ snapshots:
       '@tailwindcss/oxide': 4.1.16
       postcss: 8.5.6
       tailwindcss: 4.1.16
+
+  '@tanstack/query-core@5.90.7': {}
 
   '@types/node@20.19.24':
     dependencies:
