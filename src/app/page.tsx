@@ -1,4 +1,5 @@
 import TodoCards from "@/components/todo-cards";
+import TodoForm from "@/components/todo-form";
 import { client } from "@/lib/orpc.client";
 import { safe } from "@orpc/server";
 
@@ -9,9 +10,8 @@ export default async function Home() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-8">
-          {/* Form will go here */}
           <div className="bg-background border border-foreground/10 rounded-lg p-6">
-            {/* Form placeholder */}
+            <TodoForm />
           </div>
         </div>
 
