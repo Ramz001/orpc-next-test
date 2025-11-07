@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { client } from "@/lib/orpc.client";
+import { client, orpc } from "@/lib/orpc.client";
+import { useMutation } from "@tanstack/react-query";
 
 const TodoForm = () => {
   const [text, setText] = useState("");
@@ -16,8 +17,9 @@ const TodoForm = () => {
       await client.todo.createTodo({ text: text.trim() });
       setText("");
       window.location.reload();
-    } catch {
+    } catch (error) {
       // Error handling can be added here if needed
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -46,4 +48,3 @@ const TodoForm = () => {
 };
 
 export default TodoForm;
-

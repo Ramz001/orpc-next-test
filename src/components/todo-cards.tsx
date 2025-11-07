@@ -1,5 +1,3 @@
-"use client";
-
 import { TodoType } from "@/db/schema";
 
 type TodoCardsProps = {

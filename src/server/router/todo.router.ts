@@ -5,7 +5,7 @@ import { authed } from "@/middleware/auth.middleware";
 
 export const createTodo = authed
   .route({
-    path: "/todo/create",
+    path: "/todo/createTodo",
     method: "POST",
     summary: "Create a todo",
     tags: ["Todo Route"],
@@ -41,7 +41,7 @@ export const createTodo = authed
 
 export const getTodos = authed
   .route({
-    path: "/todo",
+    path: "/todo/getTodos",
     method: "GET",
     summary: "Get todos",
     tags: ["Todo Route"],
