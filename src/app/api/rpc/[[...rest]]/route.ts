@@ -2,7 +2,6 @@ import { router } from "@/server/router";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
-import { experimental_SmartCoercionPlugin as SmartCoercionPlugin } from "@orpc/json-schema";
 import { TodoInsertSchema } from "@/db/schema";
 import { onError } from "@orpc/server";
 
@@ -13,9 +12,6 @@ const openAPIHandler = new OpenAPIHandler(router, {
     }),
   ],
   plugins: [
-    new SmartCoercionPlugin({
-      schemaConverters: [new ZodToJsonSchemaConverter()],
-    }),
     new OpenAPIReferencePlugin({
       schemaConverters: [new ZodToJsonSchemaConverter()],
       specGenerateOptions: {
@@ -23,7 +19,6 @@ const openAPIHandler = new OpenAPIHandler(router, {
           title: "ORPC Playground",
           version: "1.0.0",
         },
-
         commonSchemas: {
           todo: { schema: TodoInsertSchema },
           UndefinedError: { error: "UndefinedError" },

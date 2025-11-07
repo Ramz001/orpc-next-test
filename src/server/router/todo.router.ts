@@ -48,7 +48,7 @@ export const getTodos = authed
   })
   .input(
     z.object({
-      limit: z.number().min(1).max(50).default(10),
+      limit: z.coerce.number().min(1).max(50).default(10),
     })
   )
   .output(z.array(TodoSelectSchema))
