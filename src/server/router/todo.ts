@@ -1,28 +1,28 @@
 import z from "zod";
 import { db } from "@/db/drizzle";
-import { todo as todoTable } from "@/db/schema";
+import { TodoSchema, todo as todoTable } from "@/db/schema";
 import { authed } from "@/middleware/auth.middleware";
 
 export const createTodo = authed
+  .route({
+    path: "/todo/create",
+    method: "POST",
+    summary: "Create a todo",
+    tags: ["Todo Route"],
+  })
   .input(
     z.object({
       text: z.string().min(1, "Text is required").max(255),
     })
   )
-  .output(
-    z.object({
-      id: z.string(),
-      text: z.string(),
-      done: z.boolean(),
-    })
-  )
+  .output(TodoSchema)
   .errors({
     FORBIDDEN: {
       message: "YOU're STUPID",
       status: 403,
     },
   })
-  .handler(async ({ context, input, errors }) => {
+  .handler(async ({ input, errors }) => {
     if (input.text === "hello") {
       throw errors.FORBIDDEN();
     }
@@ -40,20 +40,18 @@ export const createTodo = authed
   });
 
 export const getTodos = authed
+  .route({
+    path: "/todo",
+    method: "GET",
+    summary: "Get todos",
+    tags: ["Todo Route"],
+  })
   .input(
     z.object({
       limit: z.number().min(1).max(50).default(10),
     })
   )
-  .output(
-    z.array(
-      z.object({
-        id: z.string(),
-        text: z.string(),
-        done: z.boolean(),
-      })
-    )
-  )
+  .output(z.array(TodoSchema))
   .errors({
     FORBIDDEN: {
       message: "WAY too mannny",

@@ -1,12 +1,9 @@
 "use client";
 
-import { InferSelectModel } from "drizzle-orm";
-import { todo as todoTable } from "@/db/schema";
-
-type Todo = InferSelectModel<typeof todoTable>;
+import { TodoType } from "@/db/schema";
 
 type TodoCardsProps = {
-  todos: Todo[];
+  todos: TodoType[];
 };
 
 const TodoCards = ({ todos }: TodoCardsProps) => {
