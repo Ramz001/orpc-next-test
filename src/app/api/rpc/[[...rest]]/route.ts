@@ -3,7 +3,7 @@ import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { experimental_SmartCoercionPlugin as SmartCoercionPlugin } from "@orpc/json-schema";
-import { TodoSchema } from "@/db/schema";
+import { TodoInsertSchema } from "@/db/schema";
 import { onError } from "@orpc/server";
 
 const openAPIHandler = new OpenAPIHandler(router, {
@@ -25,7 +25,7 @@ const openAPIHandler = new OpenAPIHandler(router, {
         },
 
         commonSchemas: {
-          todo: { schema: TodoSchema },
+          todo: { schema: TodoInsertSchema },
           UndefinedError: { error: "UndefinedError" },
         },
         security: [{ bearerAuth: [] }],

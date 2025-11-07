@@ -1,6 +1,6 @@
 import z from "zod";
 import { db } from "@/db/drizzle";
-import { TodoSchema, todo as todoTable } from "@/db/schema";
+import { TodoInsertSchema, TodoSelectSchema, todo } from "@/db/schema";
 import { authed } from "@/middleware/auth.middleware";
 
 export const createTodo = authed
@@ -15,7 +15,7 @@ export const createTodo = authed
       text: z.string().min(1, "Text is required").max(255),
     })
   )
-  .output(TodoSchema)
+  .output(TodoInsertSchema)
   .errors({
     FORBIDDEN: {
       message: "YOU're STUPID",
@@ -28,7 +28,7 @@ export const createTodo = authed
     }
 
     const [inserted] = await db
-      .insert(todoTable)
+      .insert(todo)
       .values({ text: input.text, done: false })
       .returning();
 
@@ -51,7 +51,7 @@ export const getTodos = authed
       limit: z.number().min(1).max(50).default(10),
     })
   )
-  .output(z.array(TodoSchema))
+  .output(z.array(TodoSelectSchema))
   .errors({
     FORBIDDEN: {
       message: "WAY too mannny",
@@ -65,5 +65,5 @@ export const getTodos = authed
       throw errors.FORBIDDEN();
     }
 
-    return await db.select().from(todoTable).limit(input.limit);
+    return await db.select().from(todo).limit(input.limit);
   });

@@ -1,1 +1,1 @@
-export * from "./schemas/todo";
+export * from "./schemas/todo.schema";

@@ -1,4 +1,4 @@
-import { createTodo, getTodos } from "./todo";
+import { createTodo, getTodos } from "./todo.router";
 
 export const router = {
   todo: {
