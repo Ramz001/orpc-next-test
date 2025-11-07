@@ -16,7 +16,17 @@ export const createTodo = authed
       done: z.boolean(),
     })
   )
-  .handler(async ({ context, input }) => {
+  .errors({
+    FORBIDDEN: {
+      message: "YOU're STUPID",
+      status: 403,
+    },
+  })
+  .handler(async ({ context, input, errors }) => {
+    if (input.text === "hello") {
+      throw errors.FORBIDDEN();
+    }
+
     const [inserted] = await db
       .insert(todoTable)
       .values({ text: input.text, done: false })
@@ -44,8 +54,18 @@ export const getTodos = authed
       })
     )
   )
-  .handler(async ({ input, context }) => {
+  .errors({
+    FORBIDDEN: {
+      message: "WAY too mannny",
+      status: 403,
+    },
+  })
+  .handler(async ({ input, context, errors }) => {
     console.log("user", context.user.email);
+
+    if (input.limit >= 10) {
+      throw errors.FORBIDDEN();
+    }
 
     return await db.select().from(todoTable).limit(input.limit);
   });

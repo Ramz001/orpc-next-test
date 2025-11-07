@@ -1,10 +1,16 @@
 import TodoCards from "@/components/todo-cards";
 import TodoForm from "@/components/todo-form";
 import { client } from "@/lib/orpc.client";
-import { safe } from "@orpc/server";
+import { safe, isDefinedError } from "@orpc/server";
 
 export default async function Home() {
-  const [error, data, isDefined] = await safe(client.todo.getTodos({}));
+  const [error, data, isDefined] = await safe(
+    client.todo.getTodos({ limit: 9 })
+  );
+
+  if (isDefinedError(error) && isDefined) {
+    console.log(error.code === "FORBIDDEN");
+  }
 
   return (
     <div className="min-h-screen bg-background">
