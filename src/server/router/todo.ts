@@ -1,9 +1,9 @@
-import { os } from "@orpc/server";
 import z from "zod";
 import { db } from "@/db/drizzle";
 import { todo as todoTable } from "@/db/schema";
+import { authed } from "@/middleware/auth.middleware";
 
-export const createTodo = os
+export const createTodo = authed
   .input(
     z.object({
       text: z.string().min(1, "Text is required").max(255),
@@ -16,7 +16,7 @@ export const createTodo = os
       done: z.boolean(),
     })
   )
-  .handler(async ({ input }) => {
+  .handler(async ({ context, input }) => {
     const [inserted] = await db
       .insert(todoTable)
       .values({ text: input.text, done: false })
@@ -29,7 +29,7 @@ export const createTodo = os
     };
   });
 
-export const getTodos = os
+export const getTodos = authed
   .input(
     z.object({
       limit: z.number().min(1).max(50).default(10),
@@ -44,6 +44,8 @@ export const getTodos = os
       })
     )
   )
-  .handler(async ({ input }) => {
+  .handler(async ({ input, context }) => {
+    console.log("user", context.user.email);
+
     return await db.select().from(todoTable).limit(input.limit);
   });
