@@ -1,11 +1,11 @@
 import type { RouterClient } from "@orpc/server";
 import { RPCLink } from "@orpc/client/fetch";
 import { createORPCClient } from "@orpc/client";
-import { router } from "@/server/router";
+import { rpcRouter } from "@/server/rpc";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 
 declare global {
-  var $client: RouterClient<typeof router> | undefined;
+  var $client: RouterClient<typeof rpcRouter> | undefined;
 }
 
 const link = new RPCLink({
@@ -21,7 +21,7 @@ const link = new RPCLink({
 /**
  * Fallback to client-side client if server-side client is not available.
  */
-export const client: RouterClient<typeof router> =
+export const client: RouterClient<typeof rpcRouter> =
   globalThis.$client ?? createORPCClient(link);
 
 //just add this line and you have tanstack query integrated

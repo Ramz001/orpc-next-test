@@ -1,0 +1,57 @@
+import z from "zod";
+import { db } from "@/db/drizzle";
+import { TodoInsertSchema, TodoSelectSchema, todo } from "@/db/schema";
+import { authed } from "@/server/middleware/auth.middleware";
+
+export const createTodoRPC = authed
+  .input(
+    z.object({
+      text: z.string().min(1, "Text is required").max(255),
+    })
+  )
+  .output(TodoInsertSchema)
+  .errors({
+    FORBIDDEN: {
+      message: "YOU're STUPID",
+      status: 403,
+    },
+  })
+  .handler(async ({ input, errors }) => {
+    if (input.text === "hello") {
+      throw errors.FORBIDDEN();
+    }
+
+    const [inserted] = await db
+      .insert(todo)
+      .values({ text: input.text, done: false })
+      .returning();
+
+    return {
+      id: inserted.id,
+      text: inserted.text,
+      done: inserted.done,
+    };
+  });
+
+export const getTodosRPC = authed
+  .input(
+    z.object({
+      limit: z.coerce.number().min(1).max(50).default(10),
+    })
+  )
+  .output(z.array(TodoSelectSchema))
+  .errors({
+    FORBIDDEN: {
+      message: "WAY too mannny",
+      status: 403,
+    },
+  })
+  .handler(async ({ input, context, errors }) => {
+    console.log("user", context.user.email);
+
+    if (input.limit >= 10) {
+      throw errors.FORBIDDEN();
+    }
+
+    return await db.select().from(todo).limit(input.limit);
+  });

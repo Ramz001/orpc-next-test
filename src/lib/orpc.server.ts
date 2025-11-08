@@ -2,9 +2,9 @@ import "server-only";
 
 import { headers } from "next/headers";
 import { createRouterClient } from "@orpc/server";
-import { router } from "@/server/router";
+import { rpcRouter } from "@/server/rpc";
 
-globalThis.$client = createRouterClient(router, {
+globalThis.$client = createRouterClient(rpcRouter, {
   /**
    * Provide initial context if needed.
    *

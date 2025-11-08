@@ -1,6 +1,6 @@
 import { createTodo, getTodos } from "./todo.router";
 
-export const router = {
+export const openApiRouter = {
   todo: {
     createTodo: createTodo,
     getTodos: getTodos,
